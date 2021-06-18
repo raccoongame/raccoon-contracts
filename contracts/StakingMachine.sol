@@ -95,7 +95,7 @@ contract StakingMachine is Ownable {
                 pending = lastReward;
             }
 
-            if(pending > 0) {
+            if (pending > 0) {
                 rac.transfer(_user, pending);
             }
 
@@ -110,7 +110,7 @@ contract StakingMachine is Ownable {
         updatePool();
         harvest(msg.sender);
 
-        if(_amount > 0) {
+        if (_amount > 0) {
             rac.safeTransferFrom(address(msg.sender), address(this), _amount);
             
             if (user.amount == 0) {
@@ -131,9 +131,9 @@ contract StakingMachine is Ownable {
         updatePool();
         harvest(msg.sender);
 
-        if(_amount > 0 && totalAmount > _amount) {
+        if (_amount > 0 && totalAmount >= _amount) {
             user.amount = user.amount.sub(_amount);
-            rac.safeTransfer(address(msg.sender), _amount);
+            rac.transfer(address(msg.sender), _amount);
             totalAmount = totalAmount.sub(_amount);
 
             if (user.amount == 0 && totalStaker >= 1) {
